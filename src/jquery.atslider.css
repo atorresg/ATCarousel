@@ -1,3 +1,6 @@
+.ATContainer{	
+	overflow: hidden;
+}
 .ATSlider ul{
 	list-style: none;
 }
