@@ -1,0 +1,6 @@
+.ATSlider ul{
+	list-style: none;
+}
+.ATSlider li{
+	display: inline-block;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>ATSlider test</title>
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="../src/jquery.atslider.js"></script>
+		<link rel="stylesheet" href="../src/jquery.atslider.css">
+		<script>$(function(){
+			var slider = $('#slider').ATSlider(1);
+			slider.test();
+		});</script>
+	</head>
+	<body>
+		<div id="slider">
+			<ul>
+				<li><img src="http://lorempixel.com/600/250/" alt=""></li>
+				<li><img src="http://lorempixel.com/600/250/?2" alt=""></li>
+				<li><img src="http://lorempixel.com/600/250/?3" alt=""></li>
+			</ul>
+		</div>
+	</body>
+</html>
