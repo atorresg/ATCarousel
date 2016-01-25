@@ -1,9 +1,15 @@
 .ATContainer{	
 	overflow: hidden;
 }
-.ATSlider ul{
+.ATContainer ul{
 	list-style: none;
+	width:1000em;
 }
 .ATSlider li{
-	display: inline-block;
+	display: block;
+	float:left;
+}
+.ATContainer ul, .ATContainer li{
+	margin:0;
+	padding:0;
 }
