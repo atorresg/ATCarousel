@@ -1,14 +1,22 @@
 (function($){
 	$.fn.ATSlider = function(){
-		var config, slider = $(this), length=slider.find('img').length, args=arguments, container, current=0, x=0, playTimeout, ul;
+		var config, 
+		slider = $(this), 
+		length=slider.find('img').length, 
+		container, 
+		current=0, 
+		x=0, 
+		playTimeout, 
+		ul;
+		
 		slider.addClass("ATSlider");
-		init();
+		init(arguments);
 
 		function test(){
 			console.log(config);
 		}
 
-		function init(){
+		function init(args){
 			function vf(){};
 			config={
 				width:slider.find('ul').outerWidth(true),
@@ -25,11 +33,8 @@
 				afterChange:vf,
 			};
 
-			if ( args.length>0 && typeof args[0]==="object"){
-				for (var i in args[0]){
-					config[i]=args[0][i];
-				}
-			}
+			$.extend(config,args[0]);
+
 			slider.append('<div class="ATContainer"></div>');
 			container = slider.find('.ATContainer');
 			length=slider.find('li').length;
@@ -96,7 +101,6 @@
 		    	//$($path).find('.dots a').eq($item%$config.length).addClass('actual');
 				ul.animate({marginLeft: x+'px'},config.speed,config.easing,afterChange);
 			}
-			console.log(x);
 	    }
 
 		return {
