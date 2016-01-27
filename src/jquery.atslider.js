@@ -7,7 +7,8 @@
 		current=0, 
 		x=0, 
 		playTimeout, 
-		ul;
+		ul,
+		dots=false;
 
 		slider.addClass("ATSlider");
 		init(arguments);
@@ -17,7 +18,7 @@
 		}
 
 		function init(args){
-			function vf(){};
+			function vf(){}
 			config={
 				width:slider.find('ul').outerWidth(true),
 				totalWidth: slider.find('ul').outerWidth(true)*length,
@@ -50,25 +51,38 @@
 					});
 					slider.on('mouseleave', function(){
 						play();
-					});				}
+					});
+				}
 			}
 			renderButtons();
-
 		}
+
 		function renderButtons(){
 			function render (type){
 				switch (type){
 					case "transparent":
-						slider.append('<a class="prevTrans" href="#"></a><a class="nextTrans" href="#"></a>');
-						$('.prevTrans').on('click',function(e){
+						slider.append('<a class="ATprevTrans" href="#"></a><a class="ATnextTrans" href="#"></a>');
+						slider.find('.ATprevTrans').on('click',function(e){
 							e.preventDefault();
 							prev();
 						});
-						$('.nextTrans').on('click',function(e){
+						slider.find('.ATnextTrans').on('click',function(e){
 							e.preventDefault();
 							next();
 						});
 					break;
+					case "dots":
+						slider.append('<div class="ATdots"><div class="ATContainer"></div></div>');
+						dots = slider.find(".ATdots .ATContainer");
+						for (var i = 0; i<length; i++){
+							dots.append('<a href="#" data-slide="'+i+'"></a>');
+						}
+						slider.find('.ATdots a:first-child').addClass('current');
+						dots.find('a').on('click',function(e){
+							e.preventDefault();
+							go($(this).data('slide'));
+						});
+
 				}
 			}
 
@@ -80,10 +94,10 @@
 					for (var i in config.buttons){
 						render(config.buttons[i]);
 					}
-					
 				}
 			}
 		}
+
 		function play (){
 	    	playTimeout = setTimeout(function(){next();play();}, config.interval*1000);
 	    }
@@ -135,8 +149,9 @@
 					}
 				}
 		    	beforeChange();
-		    	//$($path).find('.dots a').removeClass('actual');
-		    	//$($path).find('.dots a').eq($item%$config.length).addClass('actual');
+
+		    	slider.find('.ATdots a').removeClass('current');
+		    	slider.find('.ATdots a').eq(item%length).addClass('current');
 				ul.animate({marginLeft: x+'px'},config.speed,config.easing,afterChange);
 			}
 	    }

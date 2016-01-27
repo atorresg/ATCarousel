@@ -1,10 +1,10 @@
 .ATSlider {
 	position: relative;
 }
-.ATContainer{	
+.ATSlider > .ATContainer{	
 	overflow: hidden;
 }
-.ATContainer ul{
+.ATSlider > .ATContainer ul{
 	list-style: none;
 	width:1000em;
 }
@@ -12,11 +12,11 @@
 	display: block;
 	float:left;
 }
-.ATContainer ul, .ATContainer li{
+.ATSlider > .ATContainer ul, .ATSlider > .ATContainer li{
 	margin:0;
 	padding:0;
 }
-.ATSlider a.prevTrans, .ATSlider a.nextTrans{
+.ATSlider a.ATprevTrans, .ATSlider a.ATnextTrans{
 	display: block;
 	width:30%;
 	height: 100%;
@@ -24,9 +24,56 @@
 	z-index: 5;
 	top:0;
 }
-.ATSlider a.prevTrans {
+.ATSlider a.ATprevTrans {
 	left:0;
 }
-.ATSlider a.nextTrans {
+.ATSlider a.ATnextTrans {
 	right:0;
+}
+.ATSlider .ATdots{
+	position:absolute;
+	z-index:10;
+	bottom:0;
+	left:50%;
+}
+.ATSlider .ATdots > .ATContainer {
+	left:-50%;
+	margin-bottom:-25%;
+	background:#FBFBFB;
+	padding:0.8em;
+	border-radius:2em;
+	overflow: auto;
+	position: relative;
+	box-shadow: 0 .2em .3em rgba(0,0,0,0.3); 
+	-moz-box-shadow: 0 .2em .3em rgba(0,0,0,0.3); 
+	-webkit-box-shadow: 0 .2em .3em rgba(0,0,0,0.3); 
+	-o-box-shadow: 0 .2em .3em rgba(0,0,0,0.3);
+}
+.ATSlider .ATdots a{
+	border-radius:1em;
+	display: block;
+	float:left;
+	padding:0.4em;
+	margin-left:0.5em;
+	background: #cdcdcd;
+	background: -moz-linear-gradient(top, #cdcdcd 0%, #eaeaea 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, #cdcdcd), color-stop(100%, #eaeaea));
+	background: -webkit-linear-gradient(top, #cdcdcd 0%, #eaeaea 100%);
+	background: -o-linear-gradient(top, #cdcdcd 0%, #eaeaea 100%);
+	background: -ms-linear-gradient(top, #cdcdcd 0%, #eaeaea 100%);
+	background: linear-gradient(to bottom, #cdcdcd 0%, #eaeaea 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdcdcd', endColorstr='#eaeaea', GradientType=0 );
+}
+.ATSlider .ATdots a.current{
+	background: #f8971c;
+	background: -moz-linear-gradient(top, #f8971c 0%, #ff7901 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, #f8971c), color-stop(100%, #ff7901));
+	background: -webkit-linear-gradient(top, #f8971c 0%, #ff7901 100%);
+	background: -o-linear-gradient(top, #f8971c 0%, #ff7901 100%);
+	background: -ms-linear-gradient(top, #f8971c 0%, #ff7901 100%);
+	background: linear-gradient(to bottom, #f8971c 0%, #ff7901 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8971c', endColorstr='#ff7901', GradientType=0 );
+}
+.ATSlider .ATdots a:first-child{
+	margin-left:0;
 }
