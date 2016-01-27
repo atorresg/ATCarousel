@@ -149,9 +149,8 @@
 					}
 				}
 		    	beforeChange();
-
 		    	slider.find('.ATdots a').removeClass('current');
-		    	slider.find('.ATdots a').eq(item%length).addClass('current');
+		    	slider.find('.ATdots a').eq(current%length).addClass('current');
 				ul.animate({marginLeft: x+'px'},config.speed,config.easing,afterChange);
 			}
 	    }
