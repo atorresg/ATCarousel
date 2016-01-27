@@ -8,7 +8,7 @@
 		x=0, 
 		playTimeout, 
 		ul;
-		
+
 		slider.addClass("ATSlider");
 		init(arguments);
 
@@ -44,6 +44,44 @@
 			ul = container.find("ul");
 			if (config.autoPlay){
 				play();
+				if (config.hoverStop){
+					slider.on('mouseenter', function(){
+						stop();
+					});
+					slider.on('mouseleave', function(){
+						play();
+					});				}
+			}
+			renderButtons();
+
+		}
+		function renderButtons(){
+			function render (type){
+				switch (type){
+					case "transparent":
+						slider.append('<a class="prevTrans" href="#"></a><a class="nextTrans" href="#"></a>');
+						$('.prevTrans').on('click',function(e){
+							e.preventDefault();
+							prev();
+						});
+						$('.nextTrans').on('click',function(e){
+							e.preventDefault();
+							next();
+						});
+					break;
+				}
+			}
+
+			if (config.buttons){
+				if (typeof config.buttons==="string"){
+					render(config.buttons);
+				}
+				if (typeof config.buttons==="object"){
+					for (var i in config.buttons){
+						render(config.buttons[i]);
+					}
+					
+				}
 			}
 		}
 		function play (){

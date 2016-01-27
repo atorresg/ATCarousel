@@ -1,3 +1,6 @@
+.ATSlider {
+	position: relative;
+}
 .ATContainer{	
 	overflow: hidden;
 }
@@ -12,4 +15,18 @@
 .ATContainer ul, .ATContainer li{
 	margin:0;
 	padding:0;
+}
+.ATSlider a.prevTrans, .ATSlider a.nextTrans{
+	display: block;
+	width:30%;
+	height: 100%;
+	position: absolute;
+	z-index: 5;
+	top:0;
+}
+.ATSlider a.prevTrans {
+	left:0;
+}
+.ATSlider a.nextTrans {
+	right:0;
 }
