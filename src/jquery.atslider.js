@@ -71,6 +71,19 @@
 							next();
 						});
 					break;
+					case "arrows":
+						if (!slider.find('.ATprevArrow, .ATnextArrow').length){
+							slider.append('<a class="ATprevArrow" href="#"><</a><a class="ATnextArrow" href="#">></a>');
+						}
+						slider.find('.ATprevArrow').on('click',function(e){
+							e.preventDefault();
+							prev();
+						});
+						slider.find('.ATnextArrow').on('click',function(e){
+							e.preventDefault();
+							next();
+						});
+					break;
 					case "dots":
 						slider.append('<div class="ATdots"><div class="ATContainer"></div></div>');
 						dots = slider.find(".ATdots .ATContainer");

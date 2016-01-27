@@ -30,6 +30,23 @@
 .ATSlider a.ATnextTrans {
 	right:0;
 }
+.ATSlider a.ATprevArrow, .ATSlider a.ATnextArrow{
+	display: block;
+	position: absolute;
+	z-index: 5;
+	top:50%;
+	margin-top:-1em;
+	font-family: Arial;
+	color:#fff;
+	font-size:2em;
+	text-decoration: none;
+}
+.ATSlider a.ATprevArrow {
+	left:1%;
+}
+.ATSlider a.ATnextArrow {
+	right:1%;
+}
 .ATSlider .ATdots{
 	position:absolute;
 	z-index:10;
