@@ -1,5 +1,6 @@
 .ATSlider {
 	position: relative;
+	font-size:22px;
 }
 .ATSlider > .ATContainer{	
 	overflow: hidden;
