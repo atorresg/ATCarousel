@@ -31,3 +31,9 @@ $(selector).ATSlider({options});
 - **interval** (default: 3) seconds between each animation
 - **beforeChange** (default: false) callback function before each animation (I am not glad with the name...)
 - **afterChange** (default: false) callback function after each animation (I am not glad with the name...)
+
+## TODO
+- More callbacks
+- "data-" atributes for li elements in order to customice animations for each slide individually
+- More button types
+- More animation posibilities (cross-fading, tiles, etc)
