@@ -18,7 +18,6 @@
 		}
 
 		function init(args){
-			function vf(){}
 			config={
 				width:slider.find('ul').outerWidth(true),
 				totalWidth: slider.find('ul').outerWidth(true)*length,
@@ -30,8 +29,8 @@
 				hoverStop:true,
 				step:1,
 				interval:3,
-				beforeChange:vf,
-				afterChange:vf,
+				beforeChange:false,
+				afterChange:false,
 			};
 
 			$.extend(config,args[0]);
@@ -127,10 +126,14 @@
 			go(current-config.step);
 	    }
 	    function beforeChange(){
-	    	config.beforeChange();
+	    	if (config.beforeChange){
+	    		config.beforeChange();
+	    	}
 	    }
 	    function afterChange(){
-	    	config.afterChange();
+	    	if (config.afterChange){
+	    		config.afterChange();
+	    	}
 	    }
 	    function go (item){
 	    	if (!ul.is(':animated')){
