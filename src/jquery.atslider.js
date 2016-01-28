@@ -29,7 +29,7 @@
 				autoPlay:true,
 				hoverStop:true,
 				step:1,
-				interval:1,
+				interval:3,
 				beforeChange:vf,
 				afterChange:vf,
 			};
@@ -61,7 +61,7 @@
 			function render (type){
 				switch (type){
 					case "transparent":
-						slider.append('<a class="ATprevTrans" href="#"></a><a class="ATnextTrans" href="#"></a>');
+						slider.append('<a class="ATprevTrans ATprev" href="#"></a><a class="ATnextTrans ATnext" href="#"></a>');
 						slider.find('.ATprevTrans').on('click',function(e){
 							e.preventDefault();
 							prev();
@@ -73,7 +73,7 @@
 					break;
 					case "arrows":
 						if (!slider.find('.ATprevArrow, .ATnextArrow').length){
-							slider.append('<a class="ATprevArrow" href="#"><</a><a class="ATnextArrow" href="#">></a>');
+							slider.append('<a class="ATprevArrow ATprev" href="#"><</a><a class="ATnextArrow ATnext" href="#">></a>');
 						}
 						slider.find('.ATprevArrow').on('click',function(e){
 							e.preventDefault();
@@ -107,6 +107,9 @@
 					for (var i in config.buttons){
 						render(config.buttons[i]);
 					}
+				}
+				if (!config.circle){					
+					slider.find('.ATprev').fadeOut(0);
 				}
 			}
 		}
@@ -149,16 +152,16 @@
 					current=Math.max(0,Math.min(item,length-1));
 					x=-config.width*current;
 					if (x<=0){
-						//$($path+' > .ant').fadeIn();
+						slider.find('.ATprev').fadeIn();
 					}
 					if (x>=-length){
-						//$($path+' > .ant').fadeOut();
+						slider.find('.ATprev').fadeOut();
 					}
-					if (x<=container.width()-config.width*(length-1)){
-						//$($path+' > .sig').fadeOut();
+					if (x<=container.width()-config.width*length){
+						slider.find('.ATnext').fadeOut();
 					}
-					if (x>container.width()-config.width*(length-1)){
-						//$($path+' > .sig').fadeIn();
+					if (x>container.width()-config.width*length){
+						slider.find('.ATnext').fadeIn();
 					}
 				}
 		    	beforeChange();
