@@ -28,7 +28,7 @@ $(selector).ATSlider({options});
 - **autoPlay** (default: true) do I need to explain this?
 - **hoverStop** (default: true) slider will stop while the cursor is over it
 - **step** (default: 1) number of slides will pass in each step. This makes sense if you want to, for example, show multiple slides at a time (modify the width option or ul css width in order to make it wide enough to show them).
-- **interval** (default: 3) seconds between each animation
+- **interval** (default: 3000) miliseconds between each animation
 - **beforeChange** (default: false) callback function before each animation (I am not glad with the name...)
 - **afterChange** (default: false) callback function after each animation (I am not glad with the name...)
 
