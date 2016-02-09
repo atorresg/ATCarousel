@@ -2,18 +2,30 @@
 	position: relative;
 	font-size:22px;
 }
-.ATSlider > .ATContainer{	
+.ATSlider > .ATContainer{
 	overflow: hidden;
+	position: relative;
+	height: 100%;
+	width:100%;
 }
-.ATSlider > .ATContainer ul{
-	list-style: none;
-	width:1000em;
+.ATSlider .ATitem{
+	display: none;
+	position: absolute;
+	left:0;
+	top:0;
+	z-index:1;
+	transition:none;
 }
-.ATSlider li{
+.ATSlider .ATitem.current, .ATSlider .ATitem.next{
 	display: block;
-	float:left;
 }
-.ATSlider > .ATContainer ul, .ATSlider > .ATContainer li{
+.ATSlider .ATitem.top {
+	z-index: 2;
+}
+.ATSlider .ATitem.bottom {
+	z-index: 0;
+}
+.ATSlider > .ATContainer ul, .ATSlider > .ATContainer .ATitem{
 	margin:0;
 	padding:0;
 }
@@ -79,7 +91,7 @@
 	background: -webkit-linear-gradient(top, #cdcdcd 0%, #eaeaea 100%);
 	background: -o-linear-gradient(top, #cdcdcd 0%, #eaeaea 100%);
 	background: -ms-linear-gradient(top, #cdcdcd 0%, #eaeaea 100%);
-	background: linear-gradient(to bottom, #cdcdcd 0%, #eaeaea 100%);
+	background: .ATitemnear-gradient(to bottom, #cdcdcd 0%, #eaeaea 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdcdcd', endColorstr='#eaeaea', GradientType=0 );
 }
 .ATSlider .ATdots a.current{
@@ -89,7 +101,7 @@
 	background: -webkit-linear-gradient(top, #f8971c 0%, #ff7901 100%);
 	background: -o-linear-gradient(top, #f8971c 0%, #ff7901 100%);
 	background: -ms-linear-gradient(top, #f8971c 0%, #ff7901 100%);
-	background: linear-gradient(to bottom, #f8971c 0%, #ff7901 100%);
+	background: .ATitemnear-gradient(to bottom, #f8971c 0%, #ff7901 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8971c', endColorstr='#ff7901', GradientType=0 );
 }
 .ATSlider .ATdots a:first-child{

@@ -11,14 +11,14 @@
 	</head>
 	<body>
 		<div id="slider">
-			<ul>
-				<li><img src="http://lorempixel.com/600/250/" alt=""></li>
-				<li><img src="http://lorempixel.com/600/250/?2" alt=""></li>
-				<li><img src="http://lorempixel.com/600/250/?3" alt=""></li>
-			</ul>
+			<img src="http://lorempixel.com/600/250/" alt="">
+			<img src="http://lorempixel.com/600/250/?2" data-interval="200" data-speed="5000" alt="">
+			<img src="http://lorempixel.com/600/250/?3" alt="">
+			<img src="http://lorempixel.com/600/250/?4" alt="">
+			<img src="http://lorempixel.com/600/250/?5" alt="">
 		</div>
 		<script>
-			var slider = $('#slider').ATSlider({circle:false,buttons:["arrows","transparent","dots"]});
+			var slider = $('#slider').ATSlider({circle:true,step:1,buttons:["arrows","transparent","dots"]});
 		</script>
 	</body>
 </html>

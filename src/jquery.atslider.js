@@ -2,46 +2,54 @@
 	$.fn.ATSlider = function(){
 		var config, 
 		slider = $(this), 
-		length=slider.find('img').length, 
-		container, 
+		length=slider.find('> *').length, 
+		container,
 		current=0, 
 		x=0, 
 		playTimeout, 
-		ul,
+		items,
 		dots=false;
 
 		slider.addClass("ATSlider");
 		init(arguments);
 
-		function test(){
-			console.log(config);
-		}
-
 		function init(args){
 			config={
-				width:slider.find('ul').outerWidth(true),
-				totalWidth: slider.find('ul').outerWidth(true)*length,
-				circle:true,
-				buttons:false,
-				speed:500,
-				easing:"swing",
-				autoPlay:true,
-				hoverStop:true,
-				step:1,
-				interval:3,
-				beforeChange:false,
-				afterChange:false,
+				width : slider.find('*').outerWidth(true),
+				totalWidth : slider.find('*').outerWidth(true)*length,
+				circle : true,
+				buttons : false,
+				transition:'slideX',
+				speed : 500,
+				easing : "swing",
+				autoPlay : true,
+				hoverStop : true,
+				step : 1,
+				interval : 3000,
+				beforeChange : false,
+				afterChange : false,
 			};
 
 			$.extend(config,args[0]);
 
+			length=slider.find('> *').length;
+			var list= slider.html();
+			slider.html('');
 			slider.append('<div class="ATContainer"></div>');
 			container = slider.find('.ATContainer');
-			length=slider.find('li').length;
-			var list= slider.find('ul').html();
-			container.append('<ul>'+list+(config.circle?list:'')+'</ul>');
-			slider.find('> ul').remove();
-			ul = container.find("ul");
+			container.append(list);
+			items = container.find("> *");
+			items.addClass('ATitem');
+			
+			if (!container.find('.current').length){
+				for (var i = 0;i<config.step;i++){
+					items.eq(i).addClass('current');
+				}
+			}
+			container.find('.current').each(function(index){
+				$(this).css({'margin-left' : config.width*index});
+			});
+
 			if (config.autoPlay){
 				play();
 				if (config.hoverStop){
@@ -63,11 +71,11 @@
 						slider.append('<a class="ATprevTrans ATprev" href="#"></a><a class="ATnextTrans ATnext" href="#"></a>');
 						slider.find('.ATprevTrans').on('click',function(e){
 							e.preventDefault();
-							prev();
+							goPrev();
 						});
 						slider.find('.ATnextTrans').on('click',function(e){
 							e.preventDefault();
-							next();
+							goNext();
 						});
 					break;
 					case "arrows":
@@ -76,11 +84,11 @@
 						}
 						slider.find('.ATprevArrow').on('click',function(e){
 							e.preventDefault();
-							prev();
+							goPrev();
 						});
 						slider.find('.ATnextArrow').on('click',function(e){
 							e.preventDefault();
-							next();
+							goNext();
 						});
 					break;
 					case "dots":
@@ -94,7 +102,6 @@
 							e.preventDefault();
 							go($(this).data('slide'));
 						});
-
 				}
 			}
 
@@ -114,16 +121,29 @@
 		}
 
 		function play (){
-	    	playTimeout = setTimeout(function(){next();play();}, config.interval*1000);
+			var interval=next().data('interval')?parseInt(next().data('interval')):config.interval;
+	    	playTimeout = setTimeout(function(){goNext();play();}, interval);
 	    }
 	    function stop(){
 	    	clearInterval(playTimeout);
 	    }
-	   	function next (){
-			go(current+config.step);
+		function prev(){
+			if (arguments.length){
+				return items.eq((arguments[0]-config.step+length)%length);
+			}
+			return items.eq((current-config.step+length)%length);
+		}		
+		function next(){
+			if (arguments.length){
+				return items.eq((arguments[0]+config.step+length)%length);
+			}
+			return items.eq((current+config.step+length)%length);
+		}
+	   	function goNext (){
+			go((current+config.step)%length);
 	    }
-	    function prev (){
-			go(current-config.step);
+	    function goPrev (){
+			go((current-config.step+length)%length);
 	    }
 	    function beforeChange(){
 	    	if (config.beforeChange){
@@ -135,25 +155,44 @@
 	    		config.afterChange();
 	    	}
 	    }
+		function animate(nextIndex){
+			var i, item, currentItems, nextItems, nextItem, transition, speed;
+			currentItems = container.find('.current');
+			nextItem = items.eq(nextIndex);
+			for (i = 0;i<config.step;i++){
+				items.eq((nextIndex+i)%length).addClass('next');
+			}
+			nextItems = container.find('.next');
+			transition = items.eq(nextIndex).data('transition')?nextItem.data('transition'):config.transition;
+			speed = items.eq(nextIndex).data('speed')?parseInt(nextItem.data('speed')):config.speed;
+			switch (transition){
+				case 'slideX':
+					currentItems.each(function(index){
+						$(this).animate({marginLeft: -config.width*(config.step-index)+'px'},speed,config.easing,function(){
+							$(this).removeClass('current');
+						});
+					});
+					nextItems.each(function(index){
+						$(this).css({'margin-left' : config.width*(index+config.step)});
+						$(this).animate({marginLeft: config.width*index+'px'},speed,config.easing,function(){
+							afterChange($(this));
+							$(this).removeClass('next').addClass('current');
+						});
+					});
+				break;
+			}
+			current=nextIndex;
+		}
 	    function go (item){
-	    	if (!ul.is(':animated')){
+	    	var ant=current;
+	    	if (!items.is(':animated')){
 	    	 	if (config.circle){
 	    	 		var der = (length+item-current)%length;
 	    	 		var izq = (item-current-length)%length;
 		    		var steps=Math.abs(der)<=Math.abs(izq)?der:izq;
-					x-=config.width*steps;
-				    if (x<=-config.totalWidth-config.width){
-						ul.css('margin-left', x+config.totalWidth+config.width*steps);
-						x+=config.totalWidth;
-					}
-				    if (x>=-config.width){
-						ul.css('margin-left', x-config.totalWidth+config.width*steps);
-						x-=config.totalWidth;
-					}
 					current=(length+item)%length;
 				} else {
 					current=Math.max(0,Math.min(item,length-1));
-					x=-config.width*current;
 					if (x<=0){
 						slider.find('.ATprev').fadeIn();
 					}
@@ -170,18 +209,18 @@
 		    	beforeChange();
 		    	slider.find('.ATdots a').removeClass('current');
 		    	slider.find('.ATdots a').eq(current%length).addClass('current');
-				ul.animate({marginLeft: x+'px'},config.speed,config.easing,afterChange);
+		    	animate(item);
 			}
 	    }
 
 		return {
-			test:test,
+			config:config,
 			go:go,
 			next:next,
 			prev:prev,
 			play:play,
 			stop:stop,
-			ul:ul
+			items:items
 		};
 	};
 }(jQuery));
