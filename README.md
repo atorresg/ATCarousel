@@ -10,8 +10,8 @@
 ## Install
 
 - link css and js after jquery in your project
-- put an ul element with the slides (they can be <img> <a> or any element, just make sure they are or contain an <img>)
-- put that ul inside a div and apply the plugin to that selector 
+- put an element with the slides (they can be <img> <a> or any element, just make sure they are or contain an <img>)
+- apply the plugin to that selector 
 ```js
 $(selector).ATSlider({options});
 ```
