@@ -11,14 +11,31 @@
 	</head>
 	<body>
 		<div id="slider">
-			<img src="http://lorempixel.com/600/250/" alt="">
-			<img src="http://lorempixel.com/600/250/?2" data-interval="200" data-speed="5000" alt="">
+			<a href="#"><img src="http://lorempixel.com/600/250/" alt=""></a>
+			<div><img src="http://lorempixel.com/600/250/?2" alt=""></div>
 			<img src="http://lorempixel.com/600/250/?3" alt="">
 			<img src="http://lorempixel.com/600/250/?4" alt="">
 			<img src="http://lorempixel.com/600/250/?5" alt="">
 		</div>
 		<script>
-			var slider = $('#slider').ATSlider({circle:true,step:1,buttons:["arrows","transparent","dots"]});
+			var slider = $('#slider').ATSlider({autoPlay:false,circle:true,buttons:["arrows","transparent","dots"],transition:function(curr,next,data){
+				curr.fadeOut(500,function(){
+					curr.endTransition();
+					next.fadeIn(500,function(){
+						next.endTransition();
+					});
+				});
+			}});
+		</script>
+		<div id="slider2">
+			<a href="#"><img src="http://lorempixel.com/600/250/" alt=""></a>
+			<div><img src="http://lorempixel.com/600/250/?2" alt=""></div>
+			<img src="http://lorempixel.com/600/250/?3" alt="">
+			<img src="http://lorempixel.com/600/250/?4" alt="">
+			<img src="http://lorempixel.com/600/250/?5" alt="">
+		</div>
+		<script>
+			var slider2 = $('#slider2').ATSlider({circle:true,buttons:["arrows","transparent","dots"]});
 		</script>
 	</body>
 </html>

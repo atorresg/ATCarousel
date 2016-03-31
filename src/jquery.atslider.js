@@ -15,8 +15,8 @@
 
 		function init(args){
 			config={
-				width : slider.find('*').outerWidth(true),
-				totalWidth : slider.find('*').outerWidth(true)*length,
+				width : slider.outerWidth(true),
+				height : slider.outerHeight(true),
 				circle : true,
 				buttons : false,
 				transition:'slideX',
@@ -39,7 +39,8 @@
 			container = slider.find('.ATContainer');
 			container.append(list);
 			items = container.find("> *");
-			items.addClass('ATitem');
+			items.addClass('ATitem').css({'display':'none'});
+			items.eq(0).show(0);
 			
 			if (!container.find('.current').length){
 				for (var i = 0;i<config.step;i++){
@@ -62,8 +63,15 @@
 				}
 			}
 			renderButtons();
+			resizeListener();
 		}
 
+		function resizeListener(){
+			$(window).resize(function(){
+		        config.width = slider.outerWidth(true);
+		        console.log(config.width);
+		    });
+		}
 		function renderButtons(){
 			function render (type){
 				switch (type){
@@ -156,36 +164,52 @@
 	    	}
 	    }
 		function animate(nextIndex){
-			var i, item, currentItems, nextItems, nextItem, transition, speed;
+			var i, item, direction, currentItems, nextItems, nextItem, transition, speed;
 			currentItems = container.find('.current');
+			direction=(currentItems.index()<nextIndex?1:-1);
 			nextItem = items.eq(nextIndex);
 			for (i = 0;i<config.step;i++){
 				items.eq((nextIndex+i)%length).addClass('next');
 			}
+			nextItem.show(0);
 			nextItems = container.find('.next');
 			transition = items.eq(nextIndex).data('transition')?nextItem.data('transition'):config.transition;
 			speed = items.eq(nextIndex).data('speed')?parseInt(nextItem.data('speed')):config.speed;
-			switch (transition){
-				case 'slideX':
-					currentItems.each(function(index){
-						$(this).animate({marginLeft: -config.width*(config.step-index)+'px'},speed,config.easing,function(){
-							$(this).removeClass('current');
+			currentItems.endTransition=function(){
+				$(this).each(function(index){
+					$(this).removeClass('current');
+				});
+			};
+			nextItems.endTransition=function(){
+				$(this).each(function(index){
+					$(this).removeClass('next').addClass('current');
+				});
+			};
+			if (typeof transition=="string"){
+				switch (transition){
+					case 'slideX':
+						currentItems.each(function(index){
+							$(this).animate({'margin-left' : direction*(-$(this).outerWidth(true)*(config.step-index))+'px'},speed,config.easing,function(){
+								currentItems.endTransition();
+							});
 						});
-					});
-					nextItems.each(function(index){
-						$(this).css({'margin-left' : config.width*(index+config.step)});
-						$(this).animate({marginLeft: config.width*index+'px'},speed,config.easing,function(){
-							afterChange($(this));
-							$(this).removeClass('next').addClass('current');
+						nextItems.each(function(index){
+							$(this).css({'margin-left' : direction*(config.width*(index+config.step))});
+							$(this).animate({'margin-left' : direction*(config.width*index)+'px'},speed,config.easing,function(){
+								afterChange($(this));
+								nextItems.endTransition();
+							});
 						});
-					});
-				break;
+					break;
+				}
+			} else if (typeof transition=="function"){
+				transition(currentItems,nextItems,{direction:direction,speed:speed});
 			}
 			current=nextIndex;
 		}
 	    function go (item){
-	    	var ant=current;
 	    	if (!items.is(':animated')){
+	    		var ant=current;
 	    	 	if (config.circle){
 	    	 		var der = (length+item-current)%length;
 	    	 		var izq = (item-current-length)%length;
@@ -208,7 +232,7 @@
 				}
 		    	beforeChange();
 		    	slider.find('.ATdots a').removeClass('current');
-		    	slider.find('.ATdots a').eq(current%length).addClass('current');
+		    	slider.find('.ATdots a').eq((current+length)%length).addClass('current');
 		    	animate(item);
 			}
 	    }
@@ -216,8 +240,8 @@
 		return {
 			config:config,
 			go:go,
-			next:next,
-			prev:prev,
+			next:goNext,
+			prev:goPrev,
 			play:play,
 			stop:stop,
 			items:items
