@@ -1,4 +1,4 @@
-# ATSlider - A simple and versatile jquery plugin slider
+# ATSlider - A simple and versatile jquery plugin carousel
 
 ## Features
 
@@ -31,6 +31,7 @@ $(selector).ATSlider({options});
 - **interval** (default: 3000) miliseconds between each animation
 - **beforeChange** (default: false) callback function before each animation (I am not glad with the name...)
 - **afterChange** (default: false) callback function after each animation (I am not glad with the name...)
+- **transition** (default: 'slideX') animation function for transitioning between slides. This can be (at the moment) 'slideX' or a custom function where the following variables will be provided: (current Item, next Item, and an object with {direction: (1 forward, -1 backward) and speed in milliseconds)}
 
 ## TODO
 - More callbacks
