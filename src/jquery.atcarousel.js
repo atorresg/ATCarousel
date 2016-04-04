@@ -15,8 +15,8 @@
 
 		function init(args){
 			config={
-				width : carousel.outerWidth(true),
-				height : carousel.outerHeight(true),
+				width : carousel.outerWidth(false),
+				height : carousel.outerHeight(false),
 				circle : true,
 				buttons : false,
 				transition:'slideX',
@@ -65,11 +65,13 @@
 			renderButtons();
 			resizeListener();
 		}
-
+		function update(){
+	        config.width = carousel.outerWidth(false);
+	        config.height = carousel.outerHeight(false);
+		}
 		function resizeListener(){
 			$(window).resize(function(){
-		        config.width = carousel.outerWidth(true);
-		        console.log(config.width);
+		        update();
 		    });
 		}
 		function renderButtons(){
