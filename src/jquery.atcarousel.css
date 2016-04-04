@@ -1,14 +1,14 @@
-.ATSlider {
+.ATCarousel {
 	position: relative;
 	font-size:22px;
 }
-.ATSlider > .ATContainer{
+.ATCarousel > .ATContainer{
 	overflow: hidden;
 	position: relative;
 	height: 100%;
 	width:100%;
 }
-.ATSlider .ATitem{
+.ATCarousel .ATitem{
 	display: none;
 	position: absolute;
 	left:0;
@@ -16,20 +16,20 @@
 	z-index:1;
 	transition:none;
 }
-.ATSlider .ATitem.current, .ATSlider .ATitem.next{
+.ATCarousel .ATitem.current, .ATCarousel .ATitem.next{
 	display: block;
 }
-.ATSlider .ATitem.top {
+.ATCarousel .ATitem.top {
 	z-index: 2;
 }
-.ATSlider .ATitem.bottom {
+.ATCarousel .ATitem.bottom {
 	z-index: 0;
 }
-.ATSlider > .ATContainer ul, .ATSlider > .ATContainer .ATitem{
+.ATCarousel > .ATContainer ul, .ATCarousel > .ATContainer .ATitem{
 	margin:0;
 	padding:0;
 }
-.ATSlider a.ATprevTrans, .ATSlider a.ATnextTrans{
+.ATCarousel a.ATprevTrans, .ATCarousel a.ATnextTrans{
 	display: block;
 	width:30%;
 	height: 100%;
@@ -37,13 +37,13 @@
 	z-index: 5;
 	top:0;
 }
-.ATSlider a.ATprevTrans {
+.ATCarousel a.ATprevTrans {
 	left:0;
 }
-.ATSlider a.ATnextTrans {
+.ATCarousel a.ATnextTrans {
 	right:0;
 }
-.ATSlider a.ATprevArrow, .ATSlider a.ATnextArrow{
+.ATCarousel a.ATprevArrow, .ATCarousel a.ATnextArrow{
 	display: block;
 	position: absolute;
 	z-index: 5;
@@ -54,19 +54,19 @@
 	font-size:2em;
 	text-decoration: none;
 }
-.ATSlider a.ATprevArrow {
+.ATCarousel a.ATprevArrow {
 	left:1%;
 }
-.ATSlider a.ATnextArrow {
+.ATCarousel a.ATnextArrow {
 	right:1%;
 }
-.ATSlider .ATdots{
+.ATCarousel .ATdots{
 	position:absolute;
 	z-index:10;
 	bottom:0;
 	left:50%;
 }
-.ATSlider .ATdots > .ATContainer {
+.ATCarousel .ATdots > .ATContainer {
 	left:-50%;
 	margin-bottom:-25%;
 	background:#FBFBFB;
@@ -79,7 +79,7 @@
 	-webkit-box-shadow: 0 .2em .3em rgba(0,0,0,0.3); 
 	-o-box-shadow: 0 .2em .3em rgba(0,0,0,0.3);
 }
-.ATSlider .ATdots a{
+.ATCarousel .ATdots a{
 	border-radius:1em;
 	display: block;
 	float:left;
@@ -94,7 +94,7 @@
 	background: .ATitemnear-gradient(to bottom, #cdcdcd 0%, #eaeaea 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdcdcd', endColorstr='#eaeaea', GradientType=0 );
 }
-.ATSlider .ATdots a.current{
+.ATCarousel .ATdots a.current{
 	background: #f8971c;
 	background: -moz-linear-gradient(top, #f8971c 0%, #ff7901 100%);
 	background: -webkit-gradient(left top, left bottom, color-stop(0%, #f8971c), color-stop(100%, #ff7901));
@@ -104,6 +104,6 @@
 	background: .ATitemnear-gradient(to bottom, #f8971c 0%, #ff7901 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8971c', endColorstr='#ff7901', GradientType=0 );
 }
-.ATSlider .ATdots a:first-child{
+.ATCarousel .ATdots a:first-child{
 	margin-left:0;
 }

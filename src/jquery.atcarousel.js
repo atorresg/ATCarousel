@@ -1,8 +1,8 @@
 (function($){
-	$.fn.ATSlider = function(){
+	$.fn.ATCarousel = function(){
 		var config, 
-		slider = $(this), 
-		length=slider.find('> *').length, 
+		carousel = $(this), 
+		length=carousel.find('> *').length, 
 		container,
 		current=0, 
 		x=0, 
@@ -10,13 +10,13 @@
 		items,
 		dots=false;
 
-		slider.addClass("ATSlider");
+		carousel.addClass("ATCarousel");
 		init(arguments);
 
 		function init(args){
 			config={
-				width : slider.outerWidth(true),
-				height : slider.outerHeight(true),
+				width : carousel.outerWidth(true),
+				height : carousel.outerHeight(true),
 				circle : true,
 				buttons : false,
 				transition:'slideX',
@@ -32,11 +32,11 @@
 
 			$.extend(config,args[0]);
 
-			length=slider.find('> *').length;
-			var list= slider.html();
-			slider.html('');
-			slider.append('<div class="ATContainer"></div>');
-			container = slider.find('.ATContainer');
+			length=carousel.find('> *').length;
+			var list= carousel.html();
+			carousel.html('');
+			carousel.append('<div class="ATContainer"></div>');
+			container = carousel.find('.ATContainer');
 			container.append(list);
 			items = container.find("> *");
 			items.addClass('ATitem').css({'display':'none'});
@@ -54,10 +54,10 @@
 			if (config.autoPlay){
 				play();
 				if (config.hoverStop){
-					slider.on('mouseenter', function(){
+					carousel.on('mouseenter', function(){
 						stop();
 					});
-					slider.on('mouseleave', function(){
+					carousel.on('mouseleave', function(){
 						play();
 					});
 				}
@@ -68,7 +68,7 @@
 
 		function resizeListener(){
 			$(window).resize(function(){
-		        config.width = slider.outerWidth(true);
+		        config.width = carousel.outerWidth(true);
 		        console.log(config.width);
 		    });
 		}
@@ -76,36 +76,36 @@
 			function render (type){
 				switch (type){
 					case "transparent":
-						slider.append('<a class="ATprevTrans ATprev" href="#"></a><a class="ATnextTrans ATnext" href="#"></a>');
-						slider.find('.ATprevTrans').on('click',function(e){
+						carousel.append('<a class="ATprevTrans ATprev" href="#"></a><a class="ATnextTrans ATnext" href="#"></a>');
+						carousel.find('.ATprevTrans').on('click',function(e){
 							e.preventDefault();
 							goPrev();
 						});
-						slider.find('.ATnextTrans').on('click',function(e){
+						carousel.find('.ATnextTrans').on('click',function(e){
 							e.preventDefault();
 							goNext();
 						});
 					break;
 					case "arrows":
-						if (!slider.find('.ATprevArrow, .ATnextArrow').length){
-							slider.append('<a class="ATprevArrow ATprev" href="#"><</a><a class="ATnextArrow ATnext" href="#">></a>');
+						if (!carousel.find('.ATprevArrow, .ATnextArrow').length){
+							carousel.append('<a class="ATprevArrow ATprev" href="#"><</a><a class="ATnextArrow ATnext" href="#">></a>');
 						}
-						slider.find('.ATprevArrow').on('click',function(e){
+						carousel.find('.ATprevArrow').on('click',function(e){
 							e.preventDefault();
 							goPrev();
 						});
-						slider.find('.ATnextArrow').on('click',function(e){
+						carousel.find('.ATnextArrow').on('click',function(e){
 							e.preventDefault();
 							goNext();
 						});
 					break;
 					case "dots":
-						slider.append('<div class="ATdots"><div class="ATContainer"></div></div>');
-						dots = slider.find(".ATdots .ATContainer");
+						carousel.append('<div class="ATdots"><div class="ATContainer"></div></div>');
+						dots = carousel.find(".ATdots .ATContainer");
 						for (var i = 0; i<length; i++){
 							dots.append('<a href="#" data-slide="'+i+'"></a>');
 						}
-						slider.find('.ATdots a:first-child').addClass('current');
+						carousel.find('.ATdots a:first-child').addClass('current');
 						dots.find('a').on('click',function(e){
 							e.preventDefault();
 							go($(this).data('slide'));
@@ -123,7 +123,7 @@
 					}
 				}
 				if (!config.circle){					
-					slider.find('.ATprev').fadeOut(0);
+					carousel.find('.ATprev').fadeOut(0);
 				}
 			}
 		}
@@ -175,6 +175,7 @@
 			nextItems = container.find('.next');
 			transition = items.eq(nextIndex).data('transition')?nextItem.data('transition'):config.transition;
 			speed = items.eq(nextIndex).data('speed')?parseInt(nextItem.data('speed')):config.speed;
+
 			currentItems.endTransition=function(){
 				$(this).each(function(index){
 					$(this).removeClass('current');
@@ -188,18 +189,27 @@
 			if (typeof transition=="string"){
 				switch (transition){
 					case 'slideX':
-						currentItems.each(function(index){
-							$(this).animate({'margin-left' : direction*(-$(this).outerWidth(true)*(config.step-index))+'px'},speed,config.easing,function(){
-								currentItems.endTransition();
-							});
+					currentItems.each(function(index){
+						$(this).animate({'margin-left' : direction*(-$(this).outerWidth(true)*(config.step-index))+'px'},speed,config.easing,function(){
+							currentItems.endTransition();
 						});
-						nextItems.each(function(index){
-							$(this).css({'margin-left' : direction*(config.width*(index+config.step))});
-							$(this).animate({'margin-left' : direction*(config.width*index)+'px'},speed,config.easing,function(){
-								afterChange($(this));
-								nextItems.endTransition();
-							});
+					});
+					nextItems.each(function(index){
+						$(this).css({'margin-left' : direction*(config.width*(index+config.step))});
+						$(this).animate({'margin-left' : direction*(config.width*index)+'px'},speed,config.easing,function(){
+							afterChange($(this));
+							nextItems.endTransition();
 						});
+					});
+					break;
+
+					case 'xFade':
+					currentItems.fadeOut(500,function(){
+						currentItems.endTransition();
+					});
+					nextItems.css('display','none').fadeIn(500,function(){
+						nextItems.endTransition();
+					});
 					break;
 				}
 			} else if (typeof transition=="function"){
@@ -218,21 +228,21 @@
 				} else {
 					current=Math.max(0,Math.min(item,length-1));
 					if (x<=0){
-						slider.find('.ATprev').fadeIn();
+						carousel.find('.ATprev').fadeIn();
 					}
 					if (x>=-length){
-						slider.find('.ATprev').fadeOut();
+						carousel.find('.ATprev').fadeOut();
 					}
 					if (x<=container.width()-config.width*length){
-						slider.find('.ATnext').fadeOut();
+						carousel.find('.ATnext').fadeOut();
 					}
 					if (x>container.width()-config.width*length){
-						slider.find('.ATnext').fadeIn();
+						carousel.find('.ATnext').fadeIn();
 					}
 				}
 		    	beforeChange();
-		    	slider.find('.ATdots a').removeClass('current');
-		    	slider.find('.ATdots a').eq((current+length)%length).addClass('current');
+		    	carousel.find('.ATdots a').removeClass('current');
+		    	carousel.find('.ATdots a').eq((current+length)%length).addClass('current');
 		    	animate(item);
 			}
 	    }

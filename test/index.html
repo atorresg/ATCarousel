@@ -2,15 +2,15 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>ATSlider test</title>
+		<title>ATCarousel test</title>
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-		<script src="../src/jquery.atslider.js"></script>
-		<link rel="stylesheet" href="../src/jquery.atslider.css">
+		<script src="../src/jquery.atcarousel.js"></script>
+		<link rel="stylesheet" href="../src/jquery.atcarousel.css">
 		<link rel="stylesheet" href="test.css">
 		
 	</head>
 	<body>
-		<div id="slider">
+		<div id="carousel">
 			<a href="#"><img src="http://lorempixel.com/600/250/" alt=""></a>
 			<div><img src="http://lorempixel.com/600/250/?2" alt=""></div>
 			<img src="http://lorempixel.com/600/250/?3" alt="">
@@ -18,16 +18,9 @@
 			<img src="http://lorempixel.com/600/250/?5" alt="">
 		</div>
 		<script>
-			var slider = $('#slider').ATSlider({autoPlay:false,circle:true,buttons:["arrows","transparent","dots"],transition:function(curr,next,data){
-				curr.fadeOut(500,function(){
-					curr.endTransition();
-					next.fadeIn(500,function(){
-						next.endTransition();
-					});
-				});
-			}});
+			var carousel = $('#carousel').ATCarousel({autoPlay:false,circle:true,buttons:["arrows","transparent","dots"],transition:'xFade'});
 		</script>
-		<div id="slider2">
+		<div id="carousel2">
 			<a href="#"><img src="http://lorempixel.com/600/250/" alt=""></a>
 			<div><img src="http://lorempixel.com/600/250/?2" alt=""></div>
 			<img src="http://lorempixel.com/600/250/?3" alt="">
@@ -35,7 +28,7 @@
 			<img src="http://lorempixel.com/600/250/?5" alt="">
 		</div>
 		<script>
-			var slider2 = $('#slider2').ATSlider({circle:true,buttons:["arrows","transparent","dots"]});
+			var carousel2 = $('#carousel2').ATCarousel({circle:true,buttons:["arrows","transparent","dots"]});
 		</script>
 	</body>
 </html>
