@@ -1,4 +1,4 @@
-# ATSlider - A simple and versatile jquery plugin carousel
+# ATCarousel - A simple and versatile jquery plugin carousel
 
 ## Features
 
@@ -13,7 +13,7 @@
 - put an element with the slides (they can be <img> <a> or any element, just make sure they are or contain an <img>)
 - apply the plugin to that selector 
 ```js
-$(selector).ATSlider({options});
+$(selector).ATCarousel({options});
 ```
 - if you want to extend control over the slider after initiated assign a var to it
 
@@ -35,6 +35,5 @@ $(selector).ATSlider({options});
 
 ## TODO
 - More callbacks
-- "data-" atributes for li elements in order to customice animations for each slide individually
 - More button types
-- More animation posibilities (cross-fading, tiles, etc)
+- More animation transitions
